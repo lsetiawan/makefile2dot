@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 
 from sys import argv, stderr
+import argparse
 from makefile2dot import makefile2dot
 
-if len(argv) > 1:
-    print(stderr, 'Usage:\n\tmakefile2dot <Makefile >out.dot or')
-    print(stderr, '\n\tmakefile2dot <Makefile |dot -Tpng > out.png')
-else:
-    makefile2dot()
+PARSER = argparse.ArgumentParser(description="Stuff")
+PARSER.add_argument('--direction', dest='direction', default="BT",
+                    help="direction to draw graph ('BT', 'TB', 'LR', or 'RL')")
+
+ARGS = PARSER.parse_args()
+
+makefile2dot(direction=ARGS.direction)

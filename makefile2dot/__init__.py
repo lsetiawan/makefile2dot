@@ -56,7 +56,15 @@ def _single_dot_dep_emitter(out_deps_pairs):
     Emit a `dot` language command to draw the dependency in GraphViz.
     """
     whitespace = re.compile('[ \t]+')
+    ignore_deps = []
     for outs_str, deps_str in out_deps_pairs:
+        if outs_str == ".PHONY":
+            ignore_deps.append(deps_str.strip())
+            continue
+
+        if outs_str in ignore_deps:
+            continue
+
         for out in whitespace.split(outs_str.strip()):
             yield '\t"%s"\n' % out
             deps = whitespace.split(deps_str.strip())
@@ -74,11 +82,17 @@ def _trio(line):
     return _single_dot_dep_emitter(_dependency_emitter(_line_emitter(line)))
 
 
-def makefile2dot():
+def makefile2dot(**kwargs):
     """
     Visalize a Makefile as a Graphviz graph.
     """
-    stdout.write('digraph G {\n\trankdir="BT"\n')
+
+    direction = kwargs.get('direction', "BT")
+    valid_directions = ["LR", "RL", "BT", "TB"]
+    if not any([True for elem in valid_directions if elem == direction]):
+        raise ValueError('direction must be one of "BT", "TB", "LR", RL"')
+
+    stdout.write('digraph G {\n\trankdir="' + direction + '"\n')
     for line in _trio(''.join(stdin).split('\n')):
         stdout.write(line)
     stdout.write('}\n')
