@@ -20,9 +20,3 @@ Example usage:
 ````bash
     makefile2dot <Makefile | dot -Tpng > out.png
 ````
-
-## Example
-
-This [example Makefile](https://github.com/vak/makefile2dot/blob/master/Makefile) will result in this png-image:
-    
-![ScreenShot](https://raw.githubusercontent.com/vak/makefile2dot/master/output-examlple.png)
