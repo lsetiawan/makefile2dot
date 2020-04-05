@@ -5,6 +5,7 @@
 # the project is built and distributed.
 #
 
+.PHONY: default
 default:
 	@echo 'This is just a dummy (but working) Makefile.'
 	@echo 'It could be used as an input file for the makefile2dot visualizer'
@@ -32,11 +33,12 @@ output.dot: Makefile makefile2dot/makefile2dot.py .linted .checked
 .PHONY: dist
 dist: dist/makefile2dot-$(VERSION)-py3-none-any.whl
 
-dist/makefile2dot-$(VERSION)-py3-none-any.whl: makefile2dot/__init__.py
+dist/makefile2dot-$(VERSION)-py3-none-any.whl: Makefile scripts/makefile2dot makefile2dot/__init__.py
 	python -m setup bdist_wheel
 
 .twine_checked: dist/makefile2dot-$(VERSION)-py3-none-any.whl
 	twine check dist/makefile2dot-$(VERSION)-py3-none-any.whl && touch .twine_checked
 
+.PHONY: clean
 clean:
 	rm -f $(ALL)
