@@ -88,11 +88,16 @@ def makefile2dot(**kwargs):
     """
 
     direction = kwargs.get('direction', "BT")
-    valid_directions = ["LR", "RL", "BT", "TB"]
-    if not any([True for elem in valid_directions if elem == direction]):
+    if direction not in ["LR", "RL", "BT", "TB"]:
         raise ValueError('direction must be one of "BT", "TB", "LR", RL"')
 
-    stdout.write('digraph G {\n\trankdir="' + direction + '"\n')
+    shape = kwargs.get('shape', "box")
+    if shape not in ["box", "ellipse", "polygon"]:
+        raise ValueError('shape must be one on "box", "ellipse", "polygon"')
+
+    stdout.write('digraph G {\n')
+    stdout.write('\trankdir="' + direction + '"\n')
+    stdout.write('\tnode [shape="' + shape + '"]\n')
     for line in _trio(''.join(stdin).split('\n')):
         stdout.write(line)
     stdout.write('}\n')

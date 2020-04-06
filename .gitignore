@@ -1,5 +1,11 @@
 __pycache__/
+build/
+dist/
+
 *.dot
 *.png
+
 .checked
 .linted
+.twine_checked
+.uploaded
