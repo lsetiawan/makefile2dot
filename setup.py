@@ -9,7 +9,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='makefile2dot',
-    version='0.1.0',
+    version='0.1.1',
     author='Chad Gilbert',
     author_email='chad.s.gilbert@gmail.com',
     description='Create a graphviz graph of a Makefile.',

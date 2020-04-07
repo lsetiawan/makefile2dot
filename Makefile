@@ -12,10 +12,10 @@ default:
 	@echo 'Type "make upload" to upload the distributables to pypi.'
 
 # Variables for long names.
-VERSION := 0.1.0
+VERSION := 0.1.1
 LIB_FILES := makefile2dot/__init__.py
 TEST_FILES := makefile2dot/test_makefile2dot.py
-WHEEL = dist/makefile2dot-$(VERSION)-py3-any.whl
+WHEEL = dist/makefile2dot-$(VERSION)-py3-none-any.whl
 TARGZ = dist/makefile2dot-$(VERSION).tar.gz
 TEMP = $(WHEEL) \
 	$(TARGZ) \
@@ -60,7 +60,7 @@ $(TARGZ): .checked setup.py
 upload: .uploaded
 
 .uploaded: .twine_checked
-	twine upload -u $PYPI_USER -p $PYPI_PASS dist/* && touch .uploaded
+	twine upload -u $(PYPI_USER) -p $(PYPI_PASS) $(WHEEL) $(TARGZ) && touch .uploaded
 
 .PHONY: clean
 clean:
