@@ -1,0 +1,11 @@
+---
+language: python
+os:
+  - linux
+  - windows
+  - osx
+python:
+  - 3.5
+  - 3.8
+script:
+  - make upload PYPI_USER=__token__ PYPI_PASS=$PYPI_TOKEN
