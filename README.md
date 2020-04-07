@@ -20,3 +20,13 @@ Example usage:
 ````bash
     makefile2dot <Makefile | dot -Tpng > out.png
 ````
+
+## Tips
+
+To test this project in the source directoy, add the source directory to the
+python path:
+
+````bash
+$ export PYTHONPATH=.
+````
+

@@ -8,7 +8,9 @@ import re
 
 def _line_emitter(input_stream):
     """
-    Emit all lines that don't end with a continuation character ("\\").
+    Emit all lines, concatenating anything that ends with a backslash.
+
+    Even comments ending with a training backsash continue on th enext line.
     """
     line_to_emit = ''
 
@@ -24,22 +26,39 @@ def _line_emitter(input_stream):
 def _dependency_emitter(lines):
     """
     Emit a list of dependencies for each target.
+
+    This means skipping any lines that are:
+      1. empty
+      2. contain comments
+      3. begin with a tab (that means its a recipe)
+      4. contain an equal sign (that means its an assignment)
+      5. contain a question mark (that is also bad)
     """
+
     colon = re.compile(':')
 
-    def no_content(line):
-        if not line:
-            return True
-
-        commented = line in ['\t', '#']
-        contains_assignment = line.find('=') > 0
-        contains_question = line.find('?') > 0
-        return commented or contains_assignment or contains_question
-
     for line in lines:
-        if no_content(line):
+        # Skip empty lines.
+        if not line:
             continue
 
+        # Skip comments.
+        if line in ['#']:
+            continue
+
+        # Skip assignments.
+        if line in ['=']:
+            continue
+
+        # Skip recipes.
+        if line in ['\t']:
+            continue
+
+        # Skip ?.
+        if line.find('?') > 0:
+            continue
+
+        # Skip targets with no dependencies.
         parts = colon.split(line)
         if len(parts) == 1:
             continue

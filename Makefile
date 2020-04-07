@@ -15,9 +15,16 @@ default:
 VERSION := 0.1.0
 LIB_FILES := makefile2dot/__init__.py
 TEST_FILES := makefile2dot/test_makefile2dot.py
-WHEEL := dist/makefile2dot-$(VERSION)-py3-any.whl
-TARGZ := dist/makefile2dot-$(VERSION).tar.gz
-TEMP := $(WHEEL) $(TARGZ) .linted .checked .twine_checked .uploaded example.dot example.png
+WHEEL = dist/makefile2dot-$(VERSION)-py3-any.whl
+TARGZ = dist/makefile2dot-$(VERSION).tar.gz
+TEMP = $(WHEEL) \
+	$(TARGZ) \
+	.linted \
+	.checked \
+	.twine_checked \
+	.uploaded \
+	example.dot \
+	example.png
 
 .PHONY: all
 all: output.png
@@ -25,11 +32,14 @@ all: output.png
 output.png: output.dot
 	dot -Tpng < $< > $@
 
-output.dot: Makefile .checked
+output.dot: Makefile .checked # This is a comment
 	scripts/makefile2dot --direction TB --shape box < $< >$@
 
 .linted: $(LIB_FILES) scripts/makefile2dot
 	pycodestyle $(LIB_FILES) scripts/makefile2dot && touch .linted
+
+.PHONY: check
+check: .checked
 
 .checked: .linted $(TEST_FILES)
 	pytest && touch .checked

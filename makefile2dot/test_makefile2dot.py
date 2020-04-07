@@ -6,51 +6,51 @@ from makefile2dot import _line_emitter, _dependency_emitter, _trio
 
 def test_empty():
     '''
-    Line emitter should return empty for empty line input.
+    Empty line should just return empty.
     '''
     assert list(_line_emitter([''])) == ['']
 
 
 def test_multiple_empty():
     '''
-    Line emitter should return same number of empties as input.
+    Consecutive empty lines should all just be returned empty.
     '''
     assert list(_line_emitter(['', ''])) == ['', '']
 
 
-def test_same_list():
+def test_normal():
     '''
-    Should be the same.
+    Normal lines should just be returned verbatim.
     '''
     assert list(_line_emitter(['a', 'b'])) == ['a', 'b']
 
 
-def test_what():
+def test_multiline():
     '''
-    I don't undertand this test but I'm keeping it.
+    Append any lines that follow a terminating backslash.
     '''
     assert list(_line_emitter(['a\\', 'b', 'c'])) == ['ab', 'c']
 
 
-def test_dep_emit():
+def test_dep_emit_empty():
     '''
-    What is this for?
+    Empty line has no dependencies.
     '''
     assert list(_dependency_emitter(_line_emitter(['']))) == []
 
 
-def test_this_one():
+def test_dep_emit_singledep():
     '''
-    Some day I'll get it.
+    A word following by a colon is a dependency.
     '''
     line = ['macro', 'out:dep1\\', ' dep2', '\tcommand']
     expected = [('out', 'dep1 dep2')]
     assert list(_dependency_emitter(_line_emitter(line))) == expected
 
 
-def test_another_one():
+def test_dep_emit_multidep():
     '''
-    Wanting to know.
+    Multiple dependencies should still work out fine.
     '''
     line = ['macro', 'out:dep1\\', ' dep2', '\tcommand', 'out2:dep3\\',
             ' dep4', '\tcommand2']
@@ -58,17 +58,17 @@ def test_another_one():
     assert list(_dependency_emitter(_line_emitter(line))) == expected
 
 
-def test_more_still():
+def test_dep_emit_nodeps():
     '''
-    Docstring.
+    Should still return the target.
     '''
     line = ['default:', '', '']
     assert list(_dependency_emitter(_line_emitter(line))) == [('default', '')]
 
 
-def test_another():
+def test_dot_emitter():
     '''
-    Docs
+    Makefile outputs a dot graph.
     '''
     line = ['macro', 'out:dep1\\', ' dep2', '\tcommand', '', 'out2:dep3\\',
             ' dep4', '\tcommand2']
@@ -77,9 +77,9 @@ def test_another():
     assert list(_trio(line)) == expected
 
 
-def test_ing():
+def test_dot_emitter_2():
     '''
-    Docs
+    Single node draws a very simple dot graph.
     '''
     line = ['default:', '\techo']
     expected = ['\t"default"\n']
