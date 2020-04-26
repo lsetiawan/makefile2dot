@@ -58,6 +58,15 @@ def test_dep_emit_multidep():
     assert list(_dependency_emitter(_line_emitter(line))) == expected
 
 
+def test_dot_emit_ampersand():
+    '''
+    Should just skip ampersand.
+    '''
+    line = ['results &: dependency']
+    expected = ['\t"results"\n', '\t"dependency" -> "results"\n']
+    assert list(_trio(line)) == expected
+
+
 def test_dep_emit_nodeps():
     '''
     Should still return the target.

@@ -13,7 +13,6 @@ def _line_emitter(input_stream):
     Even comments ending with a training backsash continue on th enext line.
     """
     line_to_emit = ''
-
     for line in input_stream:
         if line.endswith('\\'):
             line_to_emit += line[:-1]
@@ -83,6 +82,8 @@ def _single_dot_dep_emitter(out_deps_pairs):
 
         if outs_str in ignore_deps:
             continue
+
+        outs_str = outs_str.replace('&', '')
 
         for out in whitespace.split(outs_str.strip()):
             yield '\t"%s"\n' % out
