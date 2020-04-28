@@ -1,18 +1,24 @@
 """
 Test the helper functions in makefile2dot.
 """
-from makefile2dot import _line_emitter, _dependency_emitter, _trio
+import io
+from contextlib import redirect_stdout
+from makefile2dot import makefile2dot
 
 
 def test_makefile():
     '''
     Should still return the target.
     '''
-    line = r"""
-target: hello
-    recipe
+    with io.StringIO() as output:
+        with redirect_stdout(output):
+            makefile2dot(direction="TB")
+        result = output.getvalue()
 
-other_target: hey there
-"""
-    assert 
-
+    assert "digraph {" in result
+    assert "\trankdir=TB" in result
+    assert '\t"output.png" [shape=rectangle]' in result
+    assert '\t".twine_checked" [shape=rectangle]' in result
+    assert '\t"output.dot" -> Makefile' in result
+    assert '\t"dist/makefile2dot-0.1.3-py3-none-any.whl" -> ".checked"' in result
+    assert '\tdist -> ".twine_checked"' in result

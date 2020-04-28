@@ -33,7 +33,7 @@ output.png: output.dot
 	dot -Tpng < $< > $@
 
 output.dot: Makefile .checked # This is a comment
-	scripts/makefile2dot --direction TB --shape box < $< >$@
+	scripts/makefile2dot --direction TB -o $@
 
 .linted: $(LIB_FILES) scripts/makefile2dot
 	pycodestyle $(LIB_FILES) scripts/makefile2dot && touch .linted

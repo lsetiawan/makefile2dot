@@ -7,6 +7,7 @@ import subprocess as sp
 import graphviz as gv
 import sys
 
+
 def stream_database():
     """
     Generate and yield entries from the Makefile database.
