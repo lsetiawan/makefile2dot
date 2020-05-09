@@ -35,6 +35,9 @@ output.png: output.dot
 output.dot: Makefile .checked # This is a comment
 	scripts/makefile2dot --direction TB -o $@
 
+.PHONY: lint
+lint: .linted
+
 .linted: $(LIB_FILES) scripts/makefile2dot
 	pycodestyle $(LIB_FILES) scripts/makefile2dot && touch .linted
 

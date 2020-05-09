@@ -2,10 +2,8 @@
 Define the needed functions.
 """
 
-from sys import stdin, stdout, stderr
 import subprocess as sp
 import graphviz as gv
-import sys
 
 
 def stream_database():
