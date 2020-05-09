@@ -9,7 +9,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='makefile2dot',
-    version='0.1.3',
+    version='1.0.2',
     author='Chad Gilbert',
     author_email='chad.s.gilbert@gmail.com',
     description='Create a graphviz graph of a Makefile.',
@@ -17,6 +17,9 @@ setup(
     long_description_content_type="text/markdown",
     packages=["makefile2dot"],
     scripts=["scripts/makefile2dot"],
+    install_requires=[
+        'graphviz',
+        ],
     url='https://github.com/chadsgilbert/makefile2dot',
     classifiers=[
         'Programming Language :: Python :: 3.7',

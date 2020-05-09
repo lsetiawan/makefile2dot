@@ -12,7 +12,7 @@ default:
 	@echo 'Type "make upload" to upload the distributables to pypi.'
 
 # Variables for long names.
-VERSION := 0.1.3
+VERSION := 1.0.2
 LIB_FILES := makefile2dot/__init__.py
 TEST_FILES := makefile2dot/test_makefile2dot.py
 WHEEL = dist/makefile2dot-$(VERSION)-py3-none-any.whl
@@ -33,7 +33,10 @@ output.png: output.dot
 	dot -Tpng < $< > $@
 
 output.dot: Makefile .checked # This is a comment
-	scripts/makefile2dot --direction TB --shape box < $< >$@
+	scripts/makefile2dot --direction TB -o $@
+
+.PHONY: lint
+lint: .linted
 
 .linted: $(LIB_FILES) scripts/makefile2dot
 	pycodestyle $(LIB_FILES) scripts/makefile2dot && touch .linted
