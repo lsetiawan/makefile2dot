@@ -12,7 +12,7 @@ default:
 	@echo 'Type "make upload" to upload the distributables to pypi.'
 
 # Variables for long names.
-VERSION := 0.1.3
+VERSION := 1.0.1
 LIB_FILES := makefile2dot/__init__.py
 TEST_FILES := makefile2dot/test_makefile2dot.py
 WHEEL = dist/makefile2dot-$(VERSION)-py3-none-any.whl

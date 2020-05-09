@@ -20,5 +20,4 @@ def test_makefile():
     assert '\t"output.png" [shape=rectangle]' in result
     assert '\t".twine_checked" [shape=rectangle]' in result
     assert '\t"output.dot" -> Makefile' in result
-    assert '\t"dist/makefile2dot-0.1.3-py3-none-any.whl" -> ".checked"' in result
     assert '\tdist -> ".twine_checked"' in result

@@ -1,10 +1,11 @@
-# A Visualizer for Makefiles
+# Visualize Makefile Dependency Graphs
 
 `makefile2dot` produces a Graphviz `dot` graph from a Makefile. To run it,
 install `graphviz` and `python`. This version runs on python 3.
 
 ```bash
     sudo apt-get install graphviz python
+	pip install makefile2dot
 ```
 
 ## Usage
