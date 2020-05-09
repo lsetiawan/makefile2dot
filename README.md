@@ -4,8 +4,8 @@
 install `graphviz` and `python`. This version runs on python 3.
 
 ```bash
-    sudo apt-get install graphviz python
-	pip install makefile2dot
+# apt-get install graphviz python
+$ pip install makefile2dot
 ```
 
 ## Usage
@@ -19,14 +19,14 @@ can be read in by `graphviz`. So a nice trick is to pipe output from
 For example:
 
 ````bash
-    makefile2dot | dot -Tpng > out.png
+$ makefile2dot | dot -Tpng > out.png
 ````
 
 If you just want to see the graph without saving it, you can provide the
 `--view` flag:
 
 ````bash
-	makefile2dot -v
+$ makefile2dot -v
 ````
 
 You can select the graph orientation so that it is drawn from top to bottom
@@ -34,7 +34,7 @@ You can select the graph orientation so that it is drawn from top to bottom
 example:
 
 ````bash
-	makefile2dot -v --direction LR
+$ makefile2dot -v --direction LR
 ````
 
 draws the graph from left to right, rather than the default bottom to top.
