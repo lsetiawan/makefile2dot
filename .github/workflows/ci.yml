@@ -25,8 +25,9 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         python -m pip install makefile2dot
+        sudo apt install python-pydot python-pydot-ng graphviz
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Test run in CL
+    - name: Test run in command-line
       run: |
         makefile2dot -v
 
@@ -47,7 +48,7 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install makefile2dot
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Test run in CL
+    - name: Test run in command-line
       run: |
         makefile2dot -v
         
@@ -68,6 +69,6 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install makefile2dot
         pip install -r requirements.txt
-    - name: Test run in CL
+    - name: Test run in command-line
       run: |
         makefile2dot -v                
