@@ -1,24 +1,75 @@
----
 name: CI
 
 on:
   push:
-    branches: [master]
+    branches: [ "master", "gh-actions", "feature-flowchart" ]
   pull_request:
-    branches: [master]
+    branches: [ "master" ]
+    
+  workflow_dispatch:
 
 jobs:
-  build:
+  build_linux:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        python-version: [3.7]
-
+        python-version: [ '3.8' ]
     steps:
-      - uses: actions/checkout@v2
-      - name: Run a one line script
-        run: echo "Hello World!"
-      - name: Run more lines
-        run: |
-          echo "more more more"
-          echo "more mroe more more"
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install makefile2dot
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        sudo apt install graphviz
+    - name: Test run in command-line
+      run: |
+        makefile2dot
+
+  build_macOS:
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ '3.8' ]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install makefile2dot
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        brew install graphviz
+    - name: Test run in command-line
+      run: |
+        makefile2dot
+        
+  build_winOS:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ '3.8' ]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install makefile2dot
+        pip install -r requirements.txt
+    - name: Test run in command-line
+      run: |
+        makefile2dot             
