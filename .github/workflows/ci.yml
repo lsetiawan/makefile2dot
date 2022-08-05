@@ -48,7 +48,7 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install makefile2dot
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        sudo apt install graphviz
+        sudo port install graphviz
     - name: Test run in command-line
       run: |
         makefile2dot -v
