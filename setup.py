@@ -16,7 +16,11 @@ setup(
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
     packages=["makefile2dot"],
-    scripts=["scripts/makefile2dot"],
+    entry_points={
+        'console_scripts': [
+            'makefile2dot = makefile2dot:main',
+        ]
+    },
     install_requires=[
         'graphviz',
         ],

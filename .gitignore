@@ -9,3 +9,5 @@ dist/
 .linted
 .twine_checked
 .uploaded
+
+*.egg-info
